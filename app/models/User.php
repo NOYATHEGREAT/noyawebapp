@@ -4,13 +4,12 @@ namespace Aries\MiniFrameworkStore\Models;
 
 use Aries\MiniFrameworkStore\Includes\Database;
 
-
 class User extends Database {
     private $db;
 
     public function __construct() {
-        parent::__construct(); // Call the parent constructor to establish the connection
-        $this->db = $this->getConnection(); // Get the connection instance
+        parent::__construct(); // Establish the connection
+        $this->db = $this->getConnection(); // Get the DB connection
     }
 
     public function login($data) {
@@ -23,7 +22,8 @@ class User extends Database {
     }
 
     public function register($data) {
-        $sql = "INSERT INTO users (name, email, password, address, phone, birthdate, created_at, updated_at) VALUES (:name, :email, :password, :created_at, :updated_at)";
+        $sql = "INSERT INTO users (name, email, password, created_at, updated_at)
+                VALUES (:name, :email, :password, :created_at, :updated_at)";
         $stmt = $this->db->prepare($sql);
         $stmt->execute([
             'name' => $data['name'],
@@ -55,5 +55,5 @@ class User extends Database {
         $stmt->execute([
             'id' => $id
         ]);
-    }   
+    }
 }
